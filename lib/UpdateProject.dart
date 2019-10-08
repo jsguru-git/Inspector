@@ -13,11 +13,12 @@ class UpdateProject extends StatefulWidget {
   final double p_latitude;
   final double p_longtitude;
   final int Countryid;
+  final VoidCallback onUpdateProjectList;
 
-  UpdateProject({Key key, this.P_id, this.p_name, this.p_city, this.p_orgnazation, this.p_latitude, this.p_longtitude, this.Countryid}) : super();
+  UpdateProject({Key key, this.P_id, this.p_name, this.p_city, this.p_orgnazation, this.p_latitude, this.p_longtitude, this.Countryid, this.onUpdateProjectList}) : super();
 
   @override
-  _UpdateProjectState createState() => _UpdateProjectState(P_id,p_name, p_city,p_orgnazation, p_latitude,p_longtitude, Countryid );
+  _UpdateProjectState createState() => _UpdateProjectState(P_id,p_name, p_city,p_orgnazation, p_latitude,p_longtitude, Countryid, onUpdateProjectList );
 }
 
 class _UpdateProjectState extends State<UpdateProject> {
@@ -28,7 +29,8 @@ class _UpdateProjectState extends State<UpdateProject> {
   final double p_latitude;
   final double p_longtitude;
   final int Countryid;
-  _UpdateProjectState(this.P_id, this.p_name, this.p_city, this.p_orgnazation, this.p_latitude, this.p_longtitude, this.Countryid);
+  final VoidCallback onUpdateProjectList;
+  _UpdateProjectState(this.P_id, this.p_name, this.p_city, this.p_orgnazation, this.p_latitude, this.p_longtitude, this.Countryid, this.onUpdateProjectList);
 
   final key = GlobalKey<FormState>();
   int id;
@@ -48,6 +50,7 @@ class _UpdateProjectState extends State<UpdateProject> {
       print(response.reasonPhrase);
       print(response.request);
       print(item.toMap(id));
+      onUpdateProjectList();
     });
   }
 
@@ -68,13 +71,13 @@ class _UpdateProjectState extends State<UpdateProject> {
                           title:TextFormField(
                             onSaved:( value){
                               if (value.isEmpty){
-                                 value = p_name;
-                                 name= value;
+                                value = p_name;
+                                name= value;
                               }
                               else {
-                              name = value;
+                                name = value;
                               }
-                               },
+                            },
                             decoration: InputDecoration(
                                 labelText: p_name,
                                 labelStyle: TextStyle(fontWeight: FontWeight.bold),
@@ -141,18 +144,18 @@ class _UpdateProjectState extends State<UpdateProject> {
                                 latitude = double.parse(value);
                               }
                               else{
-                              latitude = double.parse(value);
+                                latitude = double.parse(value);
                               }
                             },
 
-                           decoration: InputDecoration(
-                               labelText:p_latitude.toString(),
-                               labelStyle: TextStyle(fontWeight: FontWeight.bold),
-                               border: new OutlineInputBorder(
-                                   borderRadius: new BorderRadius.circular(15.0)
-                               )
-                           ),
-                           maxLines: 1,
+                            decoration: InputDecoration(
+                                labelText:p_latitude.toString(),
+                                labelStyle: TextStyle(fontWeight: FontWeight.bold),
+                                border: new OutlineInputBorder(
+                                    borderRadius: new BorderRadius.circular(15.0)
+                                )
+                            ),
+                            maxLines: 1,
 
                           )
                       ),
@@ -161,14 +164,14 @@ class _UpdateProjectState extends State<UpdateProject> {
                           title:TextFormField(
                             keyboardType: TextInputType.number,
                             onSaved:( value) {
-                          if (value.isEmpty){
-                          value = p_longtitude.toString();
-                          longtitude = double.parse(value);
-                          }
-                          else{
-                            longtitude = double.parse(value);
-                          }
-                          },
+                              if (value.isEmpty){
+                                value = p_longtitude.toString();
+                                longtitude = double.parse(value);
+                              }
+                              else{
+                                longtitude = double.parse(value);
+                              }
+                            },
                             decoration: InputDecoration(
                                 labelText: p_longtitude.toString(),
                                 labelStyle: TextStyle(fontWeight: FontWeight.bold),
