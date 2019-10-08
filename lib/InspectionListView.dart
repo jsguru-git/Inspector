@@ -39,16 +39,18 @@ class _InspectionListViewState extends State<InspectionListView> {
       });
     });
   }
-  void DeleteInspection ( List <Inspection> item, pro_id ){
+  void DeleteInspection ( List <Inspection> item, int pro_id ){
     http.delete(URL.URL_INSPECTION+ pro_id.toString(), headers: headers).then((http.Response response){
       print("Response status: ${response.statusCode}");
       print("Response body: ${response.contentLength}");
       print(response.reasonPhrase);
       print(response.request);
-
     });
   }
 
+  void _selfRefresh() {
+    getInspectionList(this.projectID);
+  }
 
   @override
   void initState() {
@@ -155,16 +157,17 @@ class _InspectionListViewState extends State<InspectionListView> {
                                      I_LampWidth: inspectionList[i].LampWidth, I_LampCircumference: inspectionList[i].LampCircumference,
                                     I_ImageNearby: inspectionList[i].ImageNearby, I_ImageOverall: inspectionList[i].ImageOverall,
                                      I_SunPath: inspectionList[i].SunPath, I_Latitude:inspectionList[i].Latitude, I_Longtitude: inspectionList[i].Longtitude,
-                                     I_Status: inspectionList[i].Status , I_Sensor:inspectionList[i].Sensor,I_ProjectId: projectID ) )
+                                     I_Status: inspectionList[i].Status , I_Sensor:inspectionList[i].Sensor,I_ProjectId: projectID, onUpdateInspectionList: _selfRefresh ) )
                                  );
                                  }),
-                                    IconButton(icon:
-                                    Icon(Icons.delete, size: 25, color: Color.fromARGB(255, 243, 146, 00),),
-                                        onPressed: () {
-                                      setState(() {
+                                    IconButton(
+                                      icon: Icon(Icons.delete, size: 25, color: Color.fromARGB(255, 243, 146, 00),),
+                                      onPressed: () {
                                         DeleteInspection(inspectionList,inspectionList[i].id );
-                                      });
-                                        }),
+                                        setState(() {
+                                          inspectionList.removeAt(i);
+                                        });
+                                      }),
                                   ]
                               ),
 

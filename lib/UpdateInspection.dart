@@ -22,13 +22,14 @@ final  double I_Longtitude;
 final  bool I_Status;
 final  String I_Sensor;
 final  int I_ProjectId;
+final VoidCallback onUpdateInspectionList;
 
    UpdateInspectin({this.I_id, this.I_name, this.I_TunnelWidht, this.I_TunnelHeight, this.I_LampWidth, this.I_LampCircumference,
     this.I_ImageNearby, this.I_ImageOverall,this.I_SunPath, this.I_Latitude , this.I_Longtitude ,
-     this.I_Status, this.I_Sensor, this.I_ProjectId}) : super();
+     this.I_Status, this.I_Sensor, this.I_ProjectId, this.onUpdateInspectionList}) : super();
   @override
   _UpdateInspectinState createState() => _UpdateInspectinState(I_id, I_name, I_TunnelWidht,I_TunnelHeight, I_LampWidth,I_LampCircumference,
-     I_ImageNearby, I_ImageOverall ,I_SunPath, I_Latitude, I_Longtitude,I_Status, I_Sensor, I_ProjectId);
+     I_ImageNearby, I_ImageOverall ,I_SunPath, I_Latitude, I_Longtitude,I_Status, I_Sensor, I_ProjectId, onUpdateInspectionList);
 }
 
 class _UpdateInspectinState extends State<UpdateInspectin> {
@@ -46,9 +47,10 @@ class _UpdateInspectinState extends State<UpdateInspectin> {
   final  bool I_Status;
   final  String I_Sensor;
   final  int I_ProjectId;
+  final VoidCallback onUpdateInspectionList;
 
   _UpdateInspectinState(this.I_id, this.I_name, this.I_TunnelWidht,this.I_TunnelHeight,this.I_LampWidth, this.I_LampCircumference,
-      this.I_ImageNearby, this.I_ImageOverall,this.I_SunPath, this.I_Latitude, this.I_Longtitude,this.I_Status,this.I_Sensor, this.I_ProjectId);
+      this.I_ImageNearby, this.I_ImageOverall,this.I_SunPath, this.I_Latitude, this.I_Longtitude,this.I_Status,this.I_Sensor, this.I_ProjectId, this.onUpdateInspectionList);
   final key = GlobalKey<FormState>();
   int id;
   String name;
@@ -93,14 +95,15 @@ class _UpdateInspectinState extends State<UpdateInspectin> {
       SunPath;
     });
   }
-  Future <Inspection> UpdateInspectionList(Inspection item) async {
-    http.put(URL.URL_INSPECTION , headers: headers,
+  Future <Inspection> UpdateInspectionList(Inspection item, int i_id) async {
+    http.put(URL.URL_INSPECTION + i_id.toString() , headers: headers,
         body:  json.encode(item.toMapEdit())).then((http.Response response) {
       print("Response status: ${response.statusCode}");
       print("Response body: ${response.contentLength}");
       print(response.reasonPhrase);
       print(response.request);
       print(item.toMapEdit());
+      onUpdateInspectionList();
     });
   }
   void _validateInputs() {
@@ -471,9 +474,9 @@ class _UpdateInspectinState extends State<UpdateInspectin> {
                               print(I_id);
                               Inspection inspectiondata =  new Inspection(id: I_id, name:name, TunnelWidht:TunnelWidht, TunnelHeight: TunnelHeight,
                               LampWidth: LampWidth, LampCircumference: LampCircumference,ImageNearby: I_ImageNearby,Latitude: Latitude,Longtitude: Longtitude,
-                                  ImageOverall:I_ImageOverall,SunPath: SunPath, Status: Status, Sensor:Sensor ,ProjectId: I_ProjectId);
+                                  ImageOverall:I_ImageOverall,SunPath: I_SunPath, Status: I_Status, Sensor:Sensor ,ProjectId: I_ProjectId);
 
-                              UpdateInspectionList( inspectiondata);
+                              UpdateInspectionList( inspectiondata, I_id);
                               print( "output");
                               // print(postProjectList(projectData));
                               Navigator.pop(context, inspectiondata);
