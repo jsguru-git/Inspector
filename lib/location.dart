@@ -43,8 +43,8 @@ class _GetlocationState extends State<Getlocation> {
                  RaisedButton(
                    child: Text("Add location"),
                      onPressed: (){
-                     print(Longtitude);
-                     Navigator.pop(context, Longtitude);
+                       print(Longtitude);
+                       Navigator.pop(context, Longtitude);
                      })
                 ],
               )

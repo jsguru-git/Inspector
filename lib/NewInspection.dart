@@ -1,5 +1,6 @@
 import 'dart:core';
 import 'dart:io';
+import 'dart:convert';
 import 'package:api_app/Models.dart';
 import 'package:api_app/location.dart';
 import 'package:flutter/material.dart';
@@ -63,14 +64,16 @@ class _NewInspectionState extends State<NewInspection> {
   void loc() async{
     Position position =await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     setState(() {
-      mycontroller.animateCamera(CameraUpdate.newCameraPosition(
-          CameraPosition(target: LatLng(position.latitude, position.longitude),
-              zoom: 16.0)
-      ));
       Latitude = position.latitude;
       Longtitude = position.longitude;
       print (Latitude); print(Longtitude);
     });
+    Inspection inspectionData =  new Inspection(id: id, name:name, TunnelWidht:TunnelWidht, TunnelHeight: TunnelHeight
+        ,LampWidth: LampWidth, LampCircumference: LampCircumference, ImageNearby: ImageNearby.toString(), ImageOverall:ImageOverall.toString(),
+        SunPath: SunPath.toString(), Latitude: Latitude, Longtitude: Longtitude, Status:Status,Sensor: Sensor, ProjectId: projectId);
+    postInspectionList( inspectionData);
+    print("show me inspectionData created");
+    print(inspectionData.toMapEdit());
   }
 
   Map<String, String> headers = {"Content-type": "application/json"};
@@ -84,7 +87,9 @@ class _NewInspectionState extends State<NewInspection> {
       print(response.request);
       print(response.body);
       print(item.toMap(id));
-
+      print(json.decode(response.body)['id']);
+      item.id = json.decode(response.body)['id'];
+      Navigator.pop(context, item);
     });
   }
   void _validateInputs() {
@@ -443,13 +448,14 @@ class _NewInspectionState extends State<NewInspection> {
                             onPressed: () {
                               _validateInputs();
                               this.key.currentState.save();
-                              Inspection inspectionData =  new Inspection(id: id, name:name, TunnelWidht:TunnelWidht, TunnelHeight: TunnelHeight
-                              ,LampWidth: LampWidth, LampCircumference: LampCircumference, ImageNearby: ImageNearby.toString(), ImageOverall:ImageOverall.toString(),
-                              SunPath: SunPath.toString(), Latitude: 54, Longtitude: 45, Status:Status,Sensor: Sensor, ProjectId: projectId);
-                              postInspectionList( inspectionData);
+                              loc();
+//                              Inspection inspectionData =  new Inspection(id: id, name:name, TunnelWidht:TunnelWidht, TunnelHeight: TunnelHeight
+//                              ,LampWidth: LampWidth, LampCircumference: LampCircumference, ImageNearby: ImageNearby.toString(), ImageOverall:ImageOverall.toString(),
+//                              SunPath: SunPath.toString(), Latitude: Latitude, Longtitude: Longtitude, Status:Status,Sensor: Sensor, ProjectId: projectId);
+//                              postInspectionList( inspectionData);
                               print( "output");
                               // print(postProjectList(projectData));
-                              Navigator.pop(context, inspectionData);
+//                              Navigator.pop(context, inspectionData);
 
                             } ),
                       ),

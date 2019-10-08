@@ -36,7 +36,9 @@ class _NewProjectState extends State<NewProject> {
       print(response.request);
      // print(response.body);
       print(item.toMap(id));
-
+      print(json.decode(response.body)['id']);
+      item.id = json.decode(response.body)['id'];
+      Navigator.pop(context, item);
     });
   }
 
@@ -139,8 +141,6 @@ class _NewProjectState extends State<NewProject> {
                         Project projectData =  new Project(id: id, name: name, city: city, orgnazation: orgnazation,
                         latitude: latitude, longtitude: longtitude, CountryId: countryID);
                         postProjectList( projectData);
-                        Navigator.pop(context, projectData);
-
                       } ),
                 )
               ]
