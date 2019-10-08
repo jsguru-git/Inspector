@@ -18,7 +18,7 @@ class UpdateProject extends StatefulWidget {
   UpdateProject({Key key, this.P_id, this.p_name, this.p_city, this.p_orgnazation, this.p_latitude, this.p_longtitude, this.Countryid, this.onUpdateProjectList}) : super();
 
   @override
-  _UpdateProjectState createState() => _UpdateProjectState(P_id,p_name, p_city,p_orgnazation, p_latitude,p_longtitude, Countryid, onUpdateProjectList );
+  _UpdateProjectState createState() => _UpdateProjectState(P_id,p_name, p_city,p_orgnazation, p_latitude,p_longtitude, Countryid);
 }
 
 class _UpdateProjectState extends State<UpdateProject> {
@@ -29,8 +29,7 @@ class _UpdateProjectState extends State<UpdateProject> {
   final double p_latitude;
   final double p_longtitude;
   final int Countryid;
-  final VoidCallback onUpdateProjectList;
-  _UpdateProjectState(this.P_id, this.p_name, this.p_city, this.p_orgnazation, this.p_latitude, this.p_longtitude, this.Countryid, this.onUpdateProjectList);
+  _UpdateProjectState(this.P_id, this.p_name, this.p_city, this.p_orgnazation, this.p_latitude, this.p_longtitude, this.Countryid);
 
   final key = GlobalKey<FormState>();
   int id;
@@ -50,7 +49,7 @@ class _UpdateProjectState extends State<UpdateProject> {
       print(response.reasonPhrase);
       print(response.request);
       print(item.toMap(id));
-      onUpdateProjectList();
+      widget.onUpdateProjectList();
     });
   }
 

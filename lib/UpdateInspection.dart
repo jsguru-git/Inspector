@@ -29,7 +29,7 @@ final VoidCallback onUpdateInspectionList;
      this.I_Status, this.I_Sensor, this.I_ProjectId, this.onUpdateInspectionList}) : super();
   @override
   _UpdateInspectinState createState() => _UpdateInspectinState(I_id, I_name, I_TunnelWidht,I_TunnelHeight, I_LampWidth,I_LampCircumference,
-     I_ImageNearby, I_ImageOverall ,I_SunPath, I_Latitude, I_Longtitude,I_Status, I_Sensor, I_ProjectId, onUpdateInspectionList);
+     I_ImageNearby, I_ImageOverall ,I_SunPath, I_Latitude, I_Longtitude,I_Status, I_Sensor, I_ProjectId);
 }
 
 class _UpdateInspectinState extends State<UpdateInspectin> {
@@ -47,10 +47,9 @@ class _UpdateInspectinState extends State<UpdateInspectin> {
   final  bool I_Status;
   final  String I_Sensor;
   final  int I_ProjectId;
-  final VoidCallback onUpdateInspectionList;
 
   _UpdateInspectinState(this.I_id, this.I_name, this.I_TunnelWidht,this.I_TunnelHeight,this.I_LampWidth, this.I_LampCircumference,
-      this.I_ImageNearby, this.I_ImageOverall,this.I_SunPath, this.I_Latitude, this.I_Longtitude,this.I_Status,this.I_Sensor, this.I_ProjectId, this.onUpdateInspectionList);
+      this.I_ImageNearby, this.I_ImageOverall,this.I_SunPath, this.I_Latitude, this.I_Longtitude,this.I_Status,this.I_Sensor, this.I_ProjectId);
   final key = GlobalKey<FormState>();
   int id;
   String name;
@@ -103,7 +102,7 @@ class _UpdateInspectinState extends State<UpdateInspectin> {
       print(response.reasonPhrase);
       print(response.request);
       print(item.toMapEdit());
-      onUpdateInspectionList();
+      widget.onUpdateInspectionList();
     });
   }
   void _validateInputs() {

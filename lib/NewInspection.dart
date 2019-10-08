@@ -102,7 +102,7 @@ class _NewInspectionState extends State<NewInspection> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Add new project"),
+          title: Text("Add new inspection"),
         ),
         body: SingleChildScrollView(
             child:Form(
@@ -408,27 +408,28 @@ class _NewInspectionState extends State<NewInspection> {
                             height: 100,
                             child: Stack(
                               children :[
-                            GoogleMap(
-                                initialCameraPosition: CameraPosition(
-                                target: LatLng(21.4858, 39.1925),
-                            zoom: 10.0,
-                          ),
-                            ),
+                                GoogleMap(
+                                  initialCameraPosition: CameraPosition(
+                                    target: LatLng(21.4858, 39.1925),
+                                    zoom: 10.0,
+                                  ),
+                                ),
                                 Positioned(
                                   top:30,
                                   right: 15,
                                   left: 15,
                                   child: Container(
-                                      height: 50.0,
-                                      width: double.infinity,
-                                      child:  IconButton(
-                                          icon: Icon(Icons.location_on),
-                                          onPressed: (){
-                                            Navigator.push(context, 
-                                            MaterialPageRoute(builder: (BuildContext context)=> Getlocation()
-                                            ),);
-                                            },
-                                          iconSize: 50.0)
+                                    height: 50.0,
+                                    width: double.infinity,
+                                    child: IconButton(
+                                      icon: Icon(Icons.location_on),
+                                      onPressed: (){
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(builder: (BuildContext context)=> Getlocation()),
+                                        );
+                                      },
+                                      iconSize: 50.0)
                                   ),
                                 )
                               ]
