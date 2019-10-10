@@ -12,12 +12,14 @@ class _GetlocationState extends State<Getlocation> {
   String searchadress;
   double Latitude;
   double Longtitude;
+  Iterable markers = [];
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
         body: Stack(
             children: <Widget>[
               GoogleMap(
+                markers: Set.from(markers,),
                 onMapCreated: onMapCreated ,
                 initialCameraPosition: CameraPosition(
                   target: LatLng(21.4858, 39.1925),
@@ -79,6 +81,10 @@ class _GetlocationState extends State<Getlocation> {
       ));
      Latitude = position.latitude;
      Longtitude = position.longitude;
+     Iterable _markers = Iterable.generate(1, (index) {
+       return Marker(markerId: MarkerId("marker$index"), position: LatLng(Latitude, Longtitude));
+     });
+     markers = _markers;
      print("$Latitude \n $Longtitude");
     });
   }
